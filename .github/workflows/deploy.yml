@@ -40,6 +40,7 @@ jobs:
           npm run build
         env:
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+          CI: false
 
       - name: Deploy to Contabo VM
         uses: appleboy/ssh-action@master
