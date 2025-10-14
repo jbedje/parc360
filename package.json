@@ -1,0 +1,27 @@
+{
+  "name": "parc360-fleet-management",
+  "version": "1.0.0",
+  "description": "Application de gestion du parc auto pour Côte d'Ivoire PME",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm start",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "seed": "cd backend && node scripts/seedData.js",
+    "create-admin": "cd backend && node scripts/createAdmin.js",
+    "test-db": "cd backend && node scripts/testConnection.js",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm start"
+  },
+  "keywords": ["fleet-management", "vehicle-tracking", "parc-auto", "vehicle-management", "driver-management"],
+  "author": "Côte d'Ivoire PME",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/votre-organisation/parc360.git"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
