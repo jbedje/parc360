@@ -198,21 +198,6 @@ const Login: React.FC = () => {
                 )}
               </button>
             </form>
-
-            {/* Test Account Info */}
-            <div className="mt-8 pt-6 border-t border-gray-200">
-              <div className="bg-gradient-to-r from-cipme-green/10 to-cipme-ivory/10 rounded-xl p-4 border border-cipme-green/20">
-                <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Compte de test</p>
-                <div className="space-y-1">
-                  <p className="text-sm font-mono text-gray-900">
-                    <span className="font-semibold">Email:</span> admin@parc360.ci
-                  </p>
-                  <p className="text-sm font-mono text-gray-900">
-                    <span className="font-semibold">Mot de passe:</span> admin123
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Footer */}
