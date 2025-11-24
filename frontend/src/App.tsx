@@ -18,6 +18,10 @@ import MaintenanceReport from './pages/reports/MaintenanceReport';
 import FuelReport from './pages/reports/FuelReport';
 import DriversReport from './pages/reports/DriversReport';
 import CostsReport from './pages/reports/CostsReport';
+import Users from './pages/Users';
+import Insurances from './pages/Insurances';
+import Settings from './pages/Settings';
+import Analytics from './pages/Analytics';
 import Layout from './components/Layout';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -55,6 +59,10 @@ function App() {
             <Route path="reports/fuel" element={<FuelReport />} />
             <Route path="reports/drivers" element={<DriversReport />} />
             <Route path="reports/costs" element={<CostsReport />} />
+            <Route path="users" element={<Users />} />
+            <Route path="insurances" element={<Insurances />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="analytics" element={<Analytics />} />
           </Route>
         </Routes>
       </Router>

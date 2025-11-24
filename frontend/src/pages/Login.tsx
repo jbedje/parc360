@@ -90,8 +90,8 @@ const Login: React.FC = () => {
 
           <div className="mt-16 pt-8 border-t border-white/20">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center">
-                <span className="text-lg font-bold text-cipme-orange">CI</span>
+              <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center p-2">
+                <img src="/cipme-logo.png" alt="CI-PME Logo" className="w-full h-full object-contain" />
               </div>
               <div>
                 <p className="font-bold text-lg">Côte d'Ivoire PME</p>

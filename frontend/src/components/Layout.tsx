@@ -13,6 +13,9 @@ import {
   Bars3Icon,
   XMarkIcon,
   ArrowRightOnRectangleIcon,
+  ShieldCheckIcon,
+  DocumentCheckIcon,
+  Cog6ToothIcon,
 } from '@heroicons/react/24/outline';
 
 const Layout: React.FC = () => {
@@ -21,14 +24,18 @@ const Layout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const navigation = [
-    { name: 'Tableau de bord', path: '/', icon: HomeIcon },
-    { name: 'Véhicules', path: '/vehicles', icon: TruckIcon },
-    { name: 'Conducteurs', path: '/drivers', icon: UserGroupIcon },
-    { name: 'Maintenance', path: '/maintenance', icon: WrenchScrewdriverIcon },
-    { name: 'Carburant', path: '/fuel', icon: BeakerIcon },
-    { name: 'Trajets', path: '/trips', icon: MapPinIcon },
-    { name: 'Documents', path: '/documents', icon: DocumentTextIcon },
-    { name: 'Rapports', path: '/reports', icon: ChartBarIcon },
+    { name: 'Tableau de bord', path: '/', icon: HomeIcon, roles: ['admin', 'gestionnaire', 'conducteur', 'technicien'] },
+    { name: 'Véhicules', path: '/vehicles', icon: TruckIcon, roles: ['admin', 'gestionnaire'] },
+    { name: 'Conducteurs', path: '/drivers', icon: UserGroupIcon, roles: ['admin', 'gestionnaire'] },
+    { name: 'Maintenance', path: '/maintenance', icon: WrenchScrewdriverIcon, roles: ['admin', 'gestionnaire', 'technicien'] },
+    { name: 'Carburant', path: '/fuel', icon: BeakerIcon, roles: ['admin', 'gestionnaire', 'conducteur'] },
+    { name: 'Trajets', path: '/trips', icon: MapPinIcon, roles: ['admin', 'gestionnaire', 'conducteur'] },
+    { name: 'Documents', path: '/documents', icon: DocumentTextIcon, roles: ['admin', 'gestionnaire'] },
+    { name: 'Assurances', path: '/insurances', icon: DocumentCheckIcon, roles: ['admin', 'gestionnaire'] },
+    { name: 'Rapports', path: '/reports', icon: ChartBarIcon, roles: ['admin', 'gestionnaire'] },
+    { name: 'Analytique', path: '/analytics', icon: ChartBarIcon, roles: ['admin', 'gestionnaire'] },
+    { name: 'Utilisateurs', path: '/users', icon: ShieldCheckIcon, roles: ['admin'] },
+    { name: 'Paramètres', path: '/settings', icon: Cog6ToothIcon, roles: ['admin'] },
   ];
 
   return (
@@ -44,8 +51,8 @@ const Layout: React.FC = () => {
           <div className="flex items-center justify-between">
             {sidebarOpen ? (
               <div className="flex items-center space-x-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-white rounded-lg shadow-lg">
-                  <span className="text-2xl font-black text-cipme-orange">P</span>
+                <div className="flex items-center justify-center w-12 h-12 bg-white rounded-lg shadow-lg p-1">
+                  <img src="/cipme-logo.png" alt="CI-PME Logo" className="w-full h-full object-contain" />
                 </div>
                 <div>
                   <h1 className="text-xl font-black tracking-tight text-white">PARC360</h1>
@@ -53,8 +60,8 @@ const Layout: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-center w-10 h-10 mx-auto bg-white rounded-lg shadow-lg">
-                <span className="text-xl font-black text-cipme-orange">P</span>
+              <div className="flex items-center justify-center w-10 h-10 mx-auto bg-white rounded-lg shadow-lg p-1">
+                <img src="/cipme-logo.png" alt="CI-PME" className="w-full h-full object-contain" />
               </div>
             )}
             <button
@@ -72,8 +79,8 @@ const Layout: React.FC = () => {
         </div>
 
         {/* Navigation */}
-        <nav className="px-3 mt-6 space-y-1">
-          {navigation.map((item) => {
+        <nav className="px-3 mt-6 space-y-1 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+          {navigation.filter(item => item.roles.includes(user?.role || '')).map((item) => {
             const isActive = location.pathname === item.path;
             const Icon = item.icon;
             return (
