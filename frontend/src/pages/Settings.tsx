@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { settingsService } from '../services/api';
 import {
   Cog6ToothIcon,
   BuildingOfficeIcon,
@@ -82,10 +82,7 @@ const Settings: React.FC = () => {
 
   const fetchSettings = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/settings', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await settingsService.get();
       setSettings(response.data.data);
       setLoading(false);
     } catch (error) {
@@ -98,10 +95,7 @@ const Settings: React.FC = () => {
     e.preventDefault();
     setSaving(true);
     try {
-      const token = localStorage.getItem('token');
-      await axios.put('http://localhost:5000/api/settings', settings, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await settingsService.update(settings);
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } catch (error: any) {

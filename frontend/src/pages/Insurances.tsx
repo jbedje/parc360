@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { insuranceService, vehicleService } from '../services/api';
 import {
   DocumentCheckIcon,
   PlusIcon,
@@ -68,10 +68,7 @@ const Insurances: React.FC = () => {
 
   const fetchInsurances = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/insurances', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await insuranceService.getAll();
       setInsurances(response.data.data);
       setLoading(false);
     } catch (error) {
@@ -82,10 +79,7 @@ const Insurances: React.FC = () => {
 
   const fetchVehicles = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/vehicles', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await vehicleService.getAll();
       setVehicles(response.data.data);
     } catch (error) {
       console.error('Erreur lors de la récupération des véhicules:', error);
@@ -94,10 +88,7 @@ const Insurances: React.FC = () => {
 
   const fetchStats = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/insurances/stats', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await insuranceService.getStats();
       setStats(response.data.data);
     } catch (error) {
       console.error('Erreur lors de la récupération des statistiques:', error);
@@ -107,17 +98,10 @@ const Insurances: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
       if (editingInsurance) {
-        await axios.put(
-          `http://localhost:5000/api/insurances/${editingInsurance._id}`,
-          formData,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        await insuranceService.update(editingInsurance._id, formData);
       } else {
-        await axios.post('http://localhost:5000/api/insurances', formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await insuranceService.create(formData);
       }
       fetchInsurances();
       fetchStats();
@@ -132,10 +116,7 @@ const Insurances: React.FC = () => {
       return;
     }
     try {
-      const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/insurances/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await insuranceService.delete(id);
       fetchInsurances();
       fetchStats();
     } catch (error: any) {

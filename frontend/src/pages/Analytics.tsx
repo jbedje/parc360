@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { reportService } from '../services/api';
 import {
   ChartBarIcon,
   TruckIcon,
@@ -72,10 +72,7 @@ const Analytics: React.FC = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/reports/dashboard', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await reportService.getDashboard();
       setData(response.data.data);
       setLoading(false);
     } catch (error) {

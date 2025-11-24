@@ -96,4 +96,35 @@ export const reportService = {
   getCosts: (params?: any) => api.get('/reports/costs', { params }),
 };
 
+// Assurances
+export const insuranceService = {
+  getAll: (params?: any) => api.get('/insurances', { params }),
+  getOne: (id: string) => api.get(`/insurances/${id}`),
+  create: (data: any) => api.post('/insurances', data),
+  update: (id: string, data: any) => api.put(`/insurances/${id}`, data),
+  delete: (id: string) => api.delete(`/insurances/${id}`),
+  getStats: () => api.get('/insurances/stats'),
+  addClaim: (id: string, data: any) => api.post(`/insurances/${id}/sinistres`, data),
+  updateClaim: (id: string, claimId: string, data: any) =>
+    api.put(`/insurances/${id}/sinistres/${claimId}`, data),
+};
+
+// Utilisateurs (Admin)
+export const adminUserService = {
+  getAll: () => api.get('/users'),
+  getOne: (id: string) => api.get(`/users/${id}`),
+  create: (data: any) => api.post('/users', data),
+  update: (id: string, data: any) => api.put(`/users/${id}`, data),
+  delete: (id: string) => api.delete(`/users/${id}`),
+  updateRole: (id: string, role: string) => api.put(`/users/${id}/role`, { role }),
+  toggleStatus: (id: string) => api.put(`/users/${id}/status`),
+  getStats: () => api.get('/users/stats'),
+};
+
+// Paramètres
+export const settingsService = {
+  get: () => api.get('/settings'),
+  update: (data: any) => api.put('/settings', data),
+};
+
 export default api;

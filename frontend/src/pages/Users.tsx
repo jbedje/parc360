@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { adminUserService } from '../services/api';
 import {
   UserGroupIcon,
   PlusIcon,
@@ -49,10 +49,7 @@ const Users: React.FC = () => {
 
   const fetchUsers = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/users', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await adminUserService.getAll();
       setUsers(response.data.data);
       setLoading(false);
     } catch (error) {
@@ -63,10 +60,7 @@ const Users: React.FC = () => {
 
   const fetchStats = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/users/stats', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await adminUserService.getStats();
       setStats(response.data.data);
     } catch (error) {
       console.error('Erreur lors de la récupération des statistiques:', error);
@@ -76,17 +70,10 @@ const Users: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
       if (editingUser) {
-        await axios.put(
-          `http://localhost:5000/api/users/${editingUser._id}`,
-          formData,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        await adminUserService.update(editingUser._id, formData);
       } else {
-        await axios.post('http://localhost:5000/api/users', formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await adminUserService.create(formData);
       }
       fetchUsers();
       fetchStats();
@@ -101,10 +88,7 @@ const Users: React.FC = () => {
       return;
     }
     try {
-      const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/users/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await adminUserService.delete(id);
       fetchUsers();
       fetchStats();
     } catch (error: any) {
@@ -114,12 +98,7 @@ const Users: React.FC = () => {
 
   const toggleUserStatus = async (id: string) => {
     try {
-      const token = localStorage.getItem('token');
-      await axios.put(
-        `http://localhost:5000/api/users/${id}/status`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await adminUserService.toggleStatus(id);
       fetchUsers();
       fetchStats();
     } catch (error: any) {
